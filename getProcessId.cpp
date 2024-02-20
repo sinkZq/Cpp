@@ -32,16 +32,24 @@ DWORD getProcessId(PCWSTR processName) // def func as DWORD since return val of 
 	}
 
 	return processId;
-};
+}
+
+HANDLE getProcess(DWORD processId) // open process handle by processid
+{
+	return OpenProcess(PROCESS_ALL_ACCESS, FALSE, processId); // [0] access, [1] inheritance, [2] pid
+}
 
 int main()
 {
-	DWORD processInfo1 = getProcessId(L"EADesktop.exe"); // call func with L"str" L converts it to a C literal
-	DWORD processInfo2 = getProcessId(L"Agent.exe");
+	DWORD processId = getProcessId(L"Notepad.exe");
+	vector<DWORD> tProcessInfo = { processId }; // def vector to create tbl
 
-	vector<DWORD> tProcessInfo = { processInfo1, processInfo2 }; // def vector to create tbl
+	HANDLE process = getProcess(tProcessInfo[0]);
 
-	for (int processId : tProcessInfo) // iterate through tbl as processId = v, works as in pairs or any other iter call in lua
+	TerminateProcess(process, 1); // self exp
+	CloseHandle(process); // closes handle to the process
+
+	for (int processId : tProcessInfo) // iterate through tbl as processId = v, works as in pairs or any other iter call in lua (this is only for practice)
 	{
 		std::cout << processId << " " << std::endl;
 	}
