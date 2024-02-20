@@ -36,7 +36,7 @@ DWORD getProcessId(PCWSTR processName) // def func as DWORD since return val of 
 
 int main()
 {
-	DWORD processInfo1 = getProcessId(L"EADesktop.exe");
+	DWORD processInfo1 = getProcessId(L"EADesktop.exe"); // call func with L"str" L converts it to a C literal
 	DWORD processInfo2 = getProcessId(L"Agent.exe");
 
 	vector<DWORD> tProcessInfo = { processInfo1, processInfo2 }; // def vector to create tbl
